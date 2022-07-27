@@ -43,4 +43,4 @@ jobs:
           python -m pip install schemachange
       - name: Test run
         run: |
-          schemachange -f $GITHUB_WORKSPACE/dbscripts -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE
+          schemachange -f $GITHUB_WORKSPACE/dbscripts --a ZN82505.ap-northeast-2.aws -u kumarm -r ACCOUNTADMIN -w COMPUTE_WH -d TEST
