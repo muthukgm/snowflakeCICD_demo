@@ -27,7 +27,7 @@ jobs:
       - name: checkout repository 
         uses: actions/checkout@v3
       
-        - name: Use Python 3.8.x
+        - name: Set up Python 3.8.x
           uses: actions/setup-python@v2.2.1
           with:
             python-version: 3.8.x
