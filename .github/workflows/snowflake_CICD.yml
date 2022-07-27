@@ -23,16 +23,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: checkout repository 
-        uses: actions/checkout@v3
-      
-        - name: Set up Python 3.8.x
-          uses: actions/setup-python@v2.2.1
-          with:
-            python-version: 3.8.x
-            
-      - name Run schemachange
+      - uses: actions/checkout@v3
+      - name: setup-python@v2.2.1
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.x
+          
+          
         env:
             SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
             SF_USERNAME: ${{ secrets.SF_USERNAME }}
@@ -40,13 +37,13 @@ jobs:
             SF_WAREHOUSE: ${{ secrets.SF_WAREHOUSE }}
             SF_DATABASE: ${{ secrets.SF_DATABASE }}
             SF_PASSWORD: ${{ secrets.SF_PASSWORD }}
-
-      # Runs a set of commands using the runners shell
+          
+      - name: Install dependencies
         run: |
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE
-          python --version
-          echo "Step 1: Installing SchemaChange"
-            pip install schemachange
-            
-          echo "Step 1: Running SchemaChange"
-            schemachange -f $GITHUB_WORKSPACE/dbscripts -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE
+          python -m pip install schemachange
+      - name: Test with pytest
+        run: |
+          pytest
+      - name: Test run
+        run: |
+          schemachange -f $GITHUB_WORKSPACE/dbscripts -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE
