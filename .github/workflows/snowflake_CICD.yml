@@ -40,6 +40,7 @@ jobs:
           
       - name: Install dependencies
         run: |
+          echo ${{ secrets.SF_PASSWORD }}
           python -m pip install schemachange
       - name: Run SchemaChange
       
