@@ -36,11 +36,13 @@ jobs:
             SF_ROLE: ${{ secrets.SF_ROLE }}
             SF_WAREHOUSE: ${{ secrets.SF_WAREHOUSE }}
             SF_DATABASE: ${{ secrets.SF_DATABASE }}
-            SF_PASSWORD: ${{ secrets.SF_PASSWORD }}
+            SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
           
       - name: Install dependencies
         run: |
           python -m pip install schemachange
       - name: Run SchemaChange
+      
         run: |
+          echo "GITHUB Workspace :$GITHUB_WORKSPACE"
           schemachange -f $GITHUB_WORKSPACE/dbscripts -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE
